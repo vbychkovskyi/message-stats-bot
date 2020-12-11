@@ -7,6 +7,7 @@ version = "0.1"
 group = "org.motometer"
 
 repositories {
+    mavenLocal()
     mavenCentral()
     jcenter()
 }
@@ -21,21 +22,27 @@ micronaut {
 }
 
 dependencies {
-    implementation("io.micronaut:micronaut-validation")
-    implementation("io.micronaut:micronaut-runtime")
-    implementation("javax.annotation:javax.annotation-api")
-    implementation("io.micronaut:micronaut-http-client")
+    implementation "io.micronaut:micronaut-validation"
+    implementation "io.micronaut:micronaut-runtime"
+    implementation "javax.annotation:javax.annotation-api"
+    implementation "io.micronaut:micronaut-http-client"
+    implementation 'org.postgresql:postgresql:42.2.18'
+    implementation 'org.motometer.telegram:telegram-bot-client:0.0.1-SNAPSHOT'
+
     runtimeOnly("ch.qos.logback:logback-classic")
+
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
 
 
 application {
-    mainClass.set("org.motometer.Application")
+    mainClass.set("org.motometer.telegram.bot.Application")
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("15")
-    targetCompatibility = JavaVersion.toVersion("15")
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
 }
 
 tasks {

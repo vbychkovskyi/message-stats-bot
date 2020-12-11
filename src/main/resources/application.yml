@@ -1,3 +1,6 @@
 micronaut:
   application:
-    name: messageStatsBot
+    name: message-stats-bot
+  ssl:
+    enabled: true
+    buildSelfSigned: true
