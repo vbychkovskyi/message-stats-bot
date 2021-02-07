@@ -2,25 +2,23 @@ package org.motometer.telegram.bot.service;
 
 import java.util.ServiceLoader;
 
-import javax.inject.Singleton;
-
 import org.motometer.telegram.bot.Bot;
 import org.motometer.telegram.bot.client.BotBuilder;
+import org.springframework.context.annotation.Bean;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapterFactory;
 
-import io.micronaut.context.annotation.Factory;
 import lombok.RequiredArgsConstructor;
 
-@Factory
+@org.springframework.context.annotation.Configuration
 @RequiredArgsConstructor
 public class Configuration {
 
   private final ApplicationProperties applicationProperties;
 
-  @Singleton
+  @Bean
   Bot bot() {
     return BotBuilder.defaultBuilder()
       .token(applicationProperties.getTelegramToken())
@@ -28,7 +26,7 @@ public class Configuration {
       .build();
   }
 
-  @Singleton
+  @Bean
   Gson gson() {
     GsonBuilder gsonBuilder = new GsonBuilder();
     for (TypeAdapterFactory factory : ServiceLoader.load(TypeAdapterFactory.class)) {
@@ -37,7 +35,7 @@ public class Configuration {
     return gsonBuilder.create();
   }
 
-  @Singleton
+  @Bean
   WebHookListener webHookListener() {
     final PostgresRepository postgresRepository = new PostgresRepository(applicationProperties);
 
