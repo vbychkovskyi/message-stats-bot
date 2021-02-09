@@ -1,0 +1,27 @@
+version: "3.7"
+
+networks:
+  apps_net:
+    name: service_net
+
+services:
+  postgres:
+    container_name: service-postgres
+    image: postgres:12.5
+    command: [ "postgres", "-c", "log_statement=all" ]
+    environment:
+      TZ: 'UTC'
+      PGTZ: 'UTC'
+      POSTGRES_PASSWORD: 'password'
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db_init/:/docker-entrypoint-initdb.d
+
+    networks:
+      - apps_net
+
+volumes:
+  postgres_data:
+    name: service_postgres_data
