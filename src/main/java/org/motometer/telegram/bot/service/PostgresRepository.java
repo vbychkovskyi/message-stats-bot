@@ -21,7 +21,7 @@ public class PostgresRepository {
 
   static final String JDBC_DRIVER = "org.postgresql.Driver";
 
-  private static final String INSERT_QUERY = "INSERT INTO UPDATES (created_at, raw_update) values (?, ?::jsonb)";
+  private static final String INSERT_QUERY = "INSERT INTO UPDATES (created_at, raw_update, chat_id) values (?, ?::jsonb, ?)";
 
   private static final String FIND_STATS = "select distinct u.raw_update #>> '{message,from,id}'         as userId, "
     + "                u.raw_update #>> '{message,from,first_name}' as firstName, "
@@ -39,7 +39,7 @@ public class PostgresRepository {
 
   private final ApplicationProperties applicationProperties;
 
-  public void saveUpdate(final String update) {
+  public void saveUpdate(final String update, long chatId) {
     loadDriver();
 
     try (
@@ -51,6 +51,7 @@ public class PostgresRepository {
 
       stmt.setTimestamp(1, Timestamp.from(CLOCK.instant()));
       stmt.setString(2, update);
+      stmt.setLong(3, chatId);
 
       stmt.execute();
 

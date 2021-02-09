@@ -39,7 +39,7 @@ public class Configuration {
   WebHookListener webHookListener() {
     final PostgresRepository postgresRepository = new PostgresRepository(applicationProperties);
 
-    final ExceptionSafeListener l1 = new ExceptionSafeListener(new UpdateListener(postgresRepository));
+    final ExceptionSafeListener l1 = new ExceptionSafeListener(new UpdateListener(postgresRepository,gson()));
 
     final ExceptionSafeListener l2 = new ExceptionSafeListener(new CommandListener(
       bot(),

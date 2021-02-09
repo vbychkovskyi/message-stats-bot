@@ -4,7 +4,8 @@ create table updates
         constraint updates_pk
             unique,
     created_at timestamp,
-    raw_update jsonb
+    raw_update jsonb,
+    chat_id bigint
 );
 alter table updates
     owner to mafia_stats_user;
