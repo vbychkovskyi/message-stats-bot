@@ -5,7 +5,8 @@ create table updates
             unique,
     created_at timestamp,
     raw_update jsonb,
-    chat_id bigint
+    chat_id bigint,
+    text text
 );
 alter table updates
     owner to mafia_stats_user;

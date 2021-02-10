@@ -15,6 +15,7 @@ public class UpdateListener implements WebHookListener {
   public void onUpdate(final String update) {
     final Update parsedUpdate = gson.fromJson(update, Update.class);
     long chatId =     parsedUpdate.message().chat().id();
-    postgresRepository.saveUpdate(update, chatId);
+    String text = parsedUpdate.message().text();
+    postgresRepository.saveUpdate(update, chatId, text);
   }
 }
